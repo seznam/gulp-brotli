@@ -26,8 +26,13 @@
     "node": ">=10.17.0"
   },
   "devDependencies": {
-    "@types/node": "^10.17.2",
+    "@types/node": "^12.12.3",
+    "@types/through2": "^2.0.34",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "plugin-error": "^1.0.1",
+    "through2": "^3.0.1"
   }
 }
