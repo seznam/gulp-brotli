@@ -1,0 +1,33 @@
+{
+  "name": "@seznam/gulp-brotli",
+  "version": "0.0.0",
+  "description": "A gulp plugin for file compression using the brotli compression included in node.js's zlib native module, without any native or WASM extraneous libraries.",
+  "main": "index.js",
+  "scripts": {
+    "test": "tslint --project . && jest && stryker run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seznam/gulp-brotli.git"
+  },
+  "keywords": [
+    "brotli",
+    "gulp",
+    "native",
+    "zlib"
+  ],
+  "author": "Martin Jurča <martin.jurca@firma.seznam.cz>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seznam/gulp-brotli/issues"
+  },
+  "homepage": "https://github.com/seznam/gulp-brotli#readme",
+  "engines": {
+    "node": ">=10.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.17.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
+  }
+}
