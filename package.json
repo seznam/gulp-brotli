@@ -4,7 +4,12 @@
   "description": "A gulp plugin for file compression using the brotli compression included in node.js's zlib native module, without any native or WASM extraneous libraries.",
   "main": "index.js",
   "scripts": {
-    "test": "tslint --project . && jest && stryker run"
+    "check-workspace": "git diff --exit-code >/dev/null && git diff --cached --exit-code >/dev/null",
+    "compile": "tsc --project .",
+    "build": "rm -rf dist/ && npm test && npm run compile && cp package.json README.md LICENSE dist/",
+    "test": "tslint --project . && jest && stryker run",
+    "prepublishOnly": "echo 'Run \\'npm run publish-package\\' instead' && exit 1",
+    "publish-package": "npm run check-workspace && git push && git push --tags && npm run build && npm publish --access=public --ignore-scripts dist"
   },
   "repository": {
     "type": "git",
