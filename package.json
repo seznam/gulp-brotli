@@ -7,7 +7,7 @@
     "check-workspace": "git diff --exit-code >/dev/null && git diff --cached --exit-code >/dev/null",
     "compile": "tsc --project .",
     "build": "rm -rf dist/ && npm test && npm run compile && cp package.json README.md LICENSE dist/",
-    "test": "tslint --project . && jest && stryker run",
+    "test": "tslint --project . && jest",
     "prepublishOnly": "echo 'Run \\'npm run publish-package\\' instead' && exit 1",
     "publish-package": "npm run check-workspace && git push && git push --tags && npm run build && npm publish --access=public --ignore-scripts dist"
   },
@@ -31,13 +31,20 @@
     "node": ">=10.17.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.21",
     "@types/node": "^12.12.3",
     "@types/through2": "^2.0.34",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   },
   "dependencies": {
     "plugin-error": "^1.0.1",
     "through2": "^3.0.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
   }
 }
