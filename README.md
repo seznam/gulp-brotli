@@ -28,7 +28,7 @@ the leading dot (`.`)). The `extension` option defaults to `br`.
 ```typescript
 import gulpBrotli from '@seznam/gulp-brotli'
 import gulp from 'gulp'
-import zlib from "zlib";
+import zlib from 'zlib';
 
 export function compressBrotli() {
   return gulp
