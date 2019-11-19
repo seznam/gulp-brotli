@@ -1,6 +1,6 @@
-import compress from '../index'
 import util from 'util'
 import zlib from 'zlib'
+import compress from '../index'
 
 describe('compress', () => {
   it('should return a stream transform', () => {
@@ -82,5 +82,64 @@ describe('compress', () => {
     const decompressed = await util.promisify(zlib.brotliDecompress)(compressedFile.contents)
     expect(compressedFile.contents.toString('binary')).not.toBe(input.toString('binary'))
     expect(decompressed.toString('utf-8')).toBe('foo bar baz')
+  })
+
+  it('should not output the compressed file if it is larger than the input if skipLarger is true', async () => {
+    const input = new Buffer('00', 'utf-8')
+    const file = {
+      contents: input,
+      extname: '.js',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+
+    const compressedFile = await new Promise<undefined | {contents: Buffer}>((resolve, reject) => {
+      compress({skipLarger: true})._transform(file, 'utf-8', (error, result) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(result)
+        }
+      })
+    })
+    expect(compressedFile).toBe(undefined)
+  })
+
+  it('should output the compressed file even if its larger if skipLarger is not set or false', async () => {
+    const input = new Buffer('00', 'utf-8')
+    const file = {
+      contents: input,
+      extname: '.js',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+
+    const compressedFile = await new Promise<undefined | {contents: Buffer}>((resolve, reject) => {
+      compress({skipLarger: false})._transform(file, 'utf-8', (error, result) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(result)
+        }
+      })
+    })
+    expect(compressedFile).not.toBeUndefined()
+    expect(compressedFile!.contents.length).toBeGreaterThan(input.length)
+    const decompressed = await util.promisify(zlib.brotliDecompress)(compressedFile!.contents)
+    expect(decompressed.toString('utf-8')).toBe('00')
+
+    const compressedFile2 = await new Promise<undefined | {contents: Buffer}>((resolve, reject) => {
+      compress({})._transform(file, 'utf-8', (error, result) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(result)
+        }
+      })
+    })
+    expect(compressedFile2).not.toBeUndefined()
+    expect(compressedFile2!.contents.length).toBeGreaterThan(input.length)
   })
 })

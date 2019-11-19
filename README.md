@@ -21,9 +21,15 @@ npm install --save-dev @seznam/gulp-brotli
 Since `@seznam/gulp-brotli` uses the
 [native brotli support in node.js](https://nodejs.org/docs/latest-v10.x/api/zlib.html),
 all the native API's options are directly exposed to keep things simple and
-flexible. The only extra option is the optional `extension` which specifies
-the file name extension to add the file names of all compressed files (without
-the leading dot (`.`)). The `extension` option defaults to `br`.
+flexible. The only extra options are:
+
+* `extension` - specifies the file name extension to add the file names of all
+  compressed files (without the leading dot (`.`)). The `extension` option
+  is optional and defaults to `br`.
+* `skipLarger` - when `true`, any compressed files that would end up being
+  larger that their uncompressed versions will be omitted from the output.
+  The `skipLarger` option is optional and defaults to `false`. The option is
+  ignored for streams.
 
 ```typescript
 import gulpBrotli from '@seznam/gulp-brotli'

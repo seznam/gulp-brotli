@@ -5,6 +5,7 @@ import zlib from 'zlib'
 
 interface IOptions extends zlib.BrotliOptions {
   extension?: string
+  skipLarger?: boolean
 }
 
 const PLUGIN_NAME = '@seznam/gulp-brotli'
@@ -35,9 +36,14 @@ function compress(options: IOptions = {}): stream.Transform {
         zlib.brotliCompress(file.contents, options, (error, compressedContents) => {
           if (error) {
             callback(new PluginError(PLUGIN_NAME, error))
-          } else {
+            return
+          }
+
+          if (!options.skipLarger || compressedContents.length < file.contents.length) {
             file.contents = compressedContents
             callback(null, file)
+          } else {
+            callback()
           }
         })
         break
