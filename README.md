@@ -13,12 +13,12 @@ node.js's zlib native module, without any native or WASM extraneous libraries.
 `gulp-brotli` is available as npm package, you can use `npm` to install it:
 
 ```
-npm install --save-dev @seznam/gulp-brotli
+npm install --save-dev gulp-brotli
 ```
 
 ## Usage
 
-Since `@seznam/gulp-brotli` uses the
+Since `gulp-brotli` uses the
 [native brotli support in node.js](https://nodejs.org/docs/latest-v10.x/api/zlib.html),
 all the native API's options are directly exposed to keep things simple and
 flexible. The only extra options are:
@@ -34,7 +34,7 @@ flexible. The only extra options are:
 ### Compressing files
 
 ```typescript
-import gulpBrotli from '@seznam/gulp-brotli'
+import gulpBrotli from 'gulp-brotli'
 import gulp from 'gulp'
 import zlib from 'zlib'
 
@@ -56,7 +56,7 @@ Here's an example showing the `extension` and `skipLarger` options, as well as
 the `compress` alias:
 
 ```typescript
-import gulpBrotli from '@seznam/gulp-brotli'
+import gulpBrotli from 'gulp-brotli'
 import gulp from 'gulp'
 import zlib from 'zlib'
 
@@ -83,7 +83,7 @@ instead of buffering them (the `skipLarger` option would be ignored in this
 case):
 
 ```typescript
-import gulpBrotli from '@seznam/gulp-brotli'
+import gulpBrotli from 'gulp-brotli'
 import gulp from 'gulp'
 import zlib from 'zlib'
 
@@ -102,7 +102,7 @@ from the resulting files (unless another extension is specified using the
 `extension` option):
 
 ```typescript
-import gulpBrotli from '@seznam/gulp-brotli'
+import gulpBrotli from 'gulp-brotli'
 import gulp from 'gulp'
 import zlib from 'zlib'
 

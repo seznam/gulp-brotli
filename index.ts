@@ -17,7 +17,7 @@ interface ICompressionOptions extends IOptions {
   skipLarger?: boolean
 }
 
-const PLUGIN_NAME = '@seznam/gulp-brotli'
+const PLUGIN_NAME = 'gulp-brotli'
 
 function compress(options: ICompressionOptions = {}): stream.Transform {
   const extension = `.${options.extension || 'br'}`
