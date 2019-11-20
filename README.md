@@ -46,7 +46,7 @@ export function compressBrotli() {
         [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
       },
     }))
-    .pipe(gulp.dest(`destination/path/which/is/usually/the/source/path`));
+    .pipe(gulp.dest(`destination/path/which/is/usually/the/source/path`))
 }
 ```
 
