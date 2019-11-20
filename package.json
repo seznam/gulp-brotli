@@ -1,6 +1,6 @@
 {
   "name": "gulp-brotli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A gulp plugin for file compression using the brotli compression included in node.js's zlib native module, without any native or WASM extraneous libraries.",
   "main": "index.js",
   "scripts": {
