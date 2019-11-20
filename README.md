@@ -1,9 +1,9 @@
 # gulp-brotli
 
 [![Build Status](https://travis-ci.org/seznam/gulp-brotli.svg?branch=master)](https://travis-ci.org/seznam/gulp-brotli)
-[![npm](https://img.shields.io/npm/v/@seznam/gulp-brotli.svg)](https://www.npmjs.com/package/@seznam/gulp-brotli)
-[![License](https://img.shields.io/npm/l/@seznam/gulp-brotli.svg)](LICENSE)
-![npm type definitions](https://img.shields.io/npm/types/@seznam/gulp-brotli.svg)
+[![npm](https://img.shields.io/npm/v/gulp-brotli.svg)](https://www.npmjs.com/package/gulp-brotli)
+[![License](https://img.shields.io/npm/l/gulp-brotli.svg)](LICENSE)
+![npm type definitions](https://img.shields.io/npm/types/gulp-brotli.svg)
 
 A gulp plugin for file compression using the brotli compression included in
 node.js's zlib native module, without any native or WASM extraneous libraries.
