@@ -1,6 +1,6 @@
 import util from 'util'
 import zlib from 'zlib'
-import compress from '../index'
+import compress, {decompress} from '../index'
 
 describe('compress', () => {
   it('should return a stream transform', () => {
@@ -145,5 +145,114 @@ describe('compress', () => {
 
   it('should provide the compress property that is the same function as the main export', () => {
     expect(compress.compress).toBe(compress)
+  })
+})
+
+describe('decompress', () => {
+  it('should ignore null files', () => {
+    const callback = jest.fn()
+    const file = Object.freeze({
+      contents: null,
+      extname: '.js',
+      isBuffer: () => false,
+      isNull: () => true,
+      isStream: () => false,
+    })
+    decompress()._transform(file, 'utf-8', callback)
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenLastCalledWith(null, file)
+  })
+
+  it('should decompress streams', async () => {
+    const result = {}
+    const file = {
+      contents: {
+        pipe: jest.fn().mockReturnValue(result),
+      },
+      extname: '.js.br',
+      isBuffer: () => false,
+      isNull: () => false,
+      isStream: () => true,
+    }
+    const callback = jest.fn()
+    decompress()._transform(file, 'utf-8', callback)
+    expect(callback).toHaveBeenCalledTimes(1)
+    expect(callback).toHaveBeenLastCalledWith(null, file)
+    expect(file.contents).toBe(result)
+  })
+
+  it('should decompress buffered files', async () => {
+    const input = await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8'))
+    const file = {
+      contents: input,
+      extname: '.js.br',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+
+    const decompressedFile = await util.promisify(decompress()._transform)(file, 'utf-8')
+    expect(decompressedFile.contents.toString('binary')).not.toBe(input.toString('binary'))
+    expect(decompressedFile.contents.toString('utf-8')).toBe('foo bar baz')
+  })
+
+  it('should strip the default extension if not overridden', async () => {
+    const file1 = {
+      contents: await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8')),
+      extname: '.js.br',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+    const decompressedFile1 = await util.promisify(decompress()._transform)(file1, 'utf-8')
+    expect(decompressedFile1.extname).toBe('.js')
+
+    const file2 = {
+      contents: await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8')),
+      extname: '.js.brotli',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+    const decompressedFile2 = await util.promisify(decompress()._transform)(file2, 'utf-8')
+    expect(decompressedFile2.extname).toBe('.js.brotli')
+  })
+
+  it('should strip the configured extension', async () => {
+    const file1 = {
+      contents: await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8')),
+      extname: '.js.br',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+    const decompressedFile1 = await util.promisify(decompress({extension: 'brotli'})._transform)(file1, 'utf-8')
+    expect(decompressedFile1.extname).toBe('.js.br')
+
+    const file2 = {
+      contents: await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8')),
+      extname: '.js.brotli',
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+    const decompressedFile2 = await util.promisify(decompress({extension: 'brotli'})._transform)(file2, 'utf-8')
+    expect(decompressedFile2.extname).toBe('.js')
+  })
+
+  it('should not fail if the file extension cannot be get/set', async () => {
+    const file = {
+      contents: await util.promisify(zlib.brotliCompress)(new Buffer('foo bar baz', 'utf-8')),
+      get extname() {
+        throw new TypeError('This must not cause the test to fail')
+      },
+      set extname(_value) { // tslint:disable-line:variable-name
+        throw new TypeError('This must not cause the test to fail')
+      },
+      isBuffer: () => true,
+      isNull: () => false,
+      isStream: () => false,
+    }
+    return util.promisify(decompress()._transform)(file, 'utf-8')
   })
 })
