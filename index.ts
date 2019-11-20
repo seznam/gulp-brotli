@@ -3,6 +3,11 @@ import stream from 'stream'
 import through from 'through2'
 import zlib from 'zlib'
 
+type CompressFunctionType = typeof compress
+interface IExportedApi extends CompressFunctionType {
+  compress: CompressFunctionType
+}
+
 interface IOptions extends zlib.BrotliOptions {
   extension?: string
   skipLarger?: boolean
@@ -51,4 +56,6 @@ function compress(options: IOptions = {}): stream.Transform {
   })
 }
 
-export = compress
+const exportedApi: IExportedApi = compress.compress = compress
+
+export = exportedApi

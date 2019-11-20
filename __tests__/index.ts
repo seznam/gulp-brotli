@@ -142,4 +142,8 @@ describe('compress', () => {
     expect(compressedFile2).not.toBeUndefined()
     expect(compressedFile2!.contents.length).toBeGreaterThan(input.length)
   })
+
+  it('should provide the compress property that is the same function as the main export', () => {
+    expect(compress.compress).toBe(compress)
+  })
 })
