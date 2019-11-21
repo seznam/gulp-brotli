@@ -42,9 +42,9 @@ export function compressBrotli() {
   return gulp
     .src(`path/to/files/to/compress`)
     .pipe(gulpBrotli({
-      // the options are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
+      // the options are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
       params: {
-        // brotli parameters are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
+        // brotli parameters are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
         [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
       },
     }))
@@ -66,9 +66,9 @@ export function compressBrotli() {
     .pipe(gulpBrotli.compress({
       extension: 'brotli',
       skipLarger: true,
-      // the options are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
+      // the options are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
       params: {
-        // brotli parameters are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
+        // brotli parameters are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
         [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
       },
     }))
@@ -110,9 +110,9 @@ export function decompressBrotli() {
   return gulp
     .src(`path/to/files/to/compress`)
     .pipe(gulpBrotli.decompress({
-      // the options are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
+      // the options are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_class_brotlioptions 
       params: {
-        // brotli parameters are document at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
+        // brotli parameters are documented at https://nodejs.org/docs/latest-v10.x/api/zlib.html#zlib_brotli_constants
       },
     }))
     .pipe(gulp.dest(`destination/path/which/is/usually/the/source/path`))
