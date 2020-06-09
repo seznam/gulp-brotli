@@ -1,6 +1,7 @@
-import util from 'util'
-import zlib from 'zlib'
-import compress, {decompress} from '../index'
+import * as util from 'util'
+import * as zlib from 'zlib'
+import * as complete from '../index'
+import {compress, decompress} from '../index'
 
 describe('compress', () => {
   it('should return a stream transform', () => {
@@ -144,7 +145,7 @@ describe('compress', () => {
   })
 
   it('should provide the compress property that is the same function as the main export', () => {
-    expect(compress.compress).toBe(compress)
+    expect(compress).toBe(complete)
   })
 })
 

@@ -1,7 +1,7 @@
-import PluginError from 'plugin-error'
-import stream from 'stream'
-import through from 'through2'
-import zlib from 'zlib'
+import * as PluginError from 'plugin-error'
+import * as stream from 'stream'
+import * as through from 'through2'
+import * as zlib from 'zlib'
 
 type CompressFunctionType = typeof compress
 interface IExportedApi extends CompressFunctionType {
