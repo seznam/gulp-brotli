@@ -42,7 +42,7 @@
     "@types/node": "^12.12.3",
     "@types/through2": "^2.0.34",
     "jest": "^24.9.0",
-    "ts-jest": "^24.1.0",
+    "ts-jest": "^29.0.3",
     "tslint": "^5.20.0",
     "typescript": "^3.6.4"
   },
